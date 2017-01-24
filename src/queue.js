@@ -40,12 +40,7 @@ export default class Queue {
   }
 
   isEmpty(){
-    if(this.storage.length === 0){
-      return true
-    }
-    else{
-      return false
-    }
+    return this.top === 0
   }
 
 }
