@@ -1,6 +1,6 @@
 'use strict'
 
-export default class pQueue {
+export default class PriorityQueue {
   constructor() {
     this.storage = []
     this.front = 0
