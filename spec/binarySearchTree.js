@@ -23,6 +23,24 @@ describe('BinarySearchTree', () => {
     })
   })
 
+  context('search()', () => {
+    it('returns a node object.', () => {
+      const bst = new BinarySearchTree()
+
+      bst.search(10)
+      bst.search(15)
+      bst.search(20)
+
+      expect(bst.count).to.eql(0)
+    })
+
+    it('returns null if node is not found.', () => {
+      const bst = new BinarySearchTree()
+
+      expect(bst.count).to.eql(0)
+    })
+  })
+
   context('remove()', () => {
     it('removes an value\'s node from the tree.', () => {
       const bst = new BinarySearchTree()

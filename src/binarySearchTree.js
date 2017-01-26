@@ -22,6 +22,7 @@ export default class BinarySearchTree {
       } else {
         insertTree(data, tree.left)
       }
+
     } else {
       if(!tree.right) {
         tree.right = new Node(data)
@@ -30,12 +31,30 @@ export default class BinarySearchTree {
       }
     }
    }
+
    if(!this.root) {
     this.root = new Node(data)
    } else {
     insertTree(data, this.root)
     this.count++
    }
+  }
+
+  search(data) {
+    let current = this.root
+    if(current) {
+      while(current.data != data) {
+        if(data < current.data) {
+          current = current.left
+        } else {
+          current = current.right
+        }
+        if(current == null) {
+          return null
+        }
+      }
+    }
+    return current
   }
 
   remove(node, data) {
