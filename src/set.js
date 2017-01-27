@@ -44,9 +44,9 @@ export default class Set {
   union(otherSet){
     let newSet = this.storage
     let newIndex = this.index
-    for(let i = 0; i < otherSet.length; i++){
-      if(!this.contains(otherSet[i])){
-        newSet[newIndex++] = (otherSet[i])
+    for(let i = 0; i < otherSet.index; i++){
+      if(!this.contains(otherSet.storage[i])){
+        newSet[newIndex++] = (otherSet.storage[i])
       }
     }
     return newSet
@@ -55,9 +55,9 @@ export default class Set {
   intersect(otherSet){
     let newSet = []
     let newIndex = 0
-    for(let i = 0; i < otherSet.length; i++){
-      if(this.contains(otherSet[i])){
-        newSet[newIndex++] = otherSet[i]
+    for(let i = 0; i < otherSet.index; i++){
+      if(this.contains(otherSet.storage[i])){
+        newSet[newIndex++] = otherSet.storage[i]
       }
     }
     return newSet
@@ -65,21 +65,11 @@ export default class Set {
 
   difference(otherSet){
     let newSet = []
-    let newSetIndex = 0
+    let newIndex = 0
     for(let i = 0; i < this.index; i++){
-
-      let isInElement = false
-
-      for(let j = 0; j < otherSet.length; j++){
-        if(this.storage[i] === otherSet[j]){
-          isInElement = true
-        }
+      if(!otherSet.contains(this.storage[i])){
+        newSet[newIndex++] = this.storage[i]
       }
-
-      if(!isInElement){
-        newSet[newSetIndex++] = this.storage[i]
-      }
-
     }
     return newSet
   }
@@ -87,8 +77,8 @@ export default class Set {
   isSubset(otherSet){
     for(let i = 0; i < this.index; i++){
       let subset = false
-      for(let j = 0; j < otherSet.length; j++){
-        if(this.storage[i] === otherSet[j]){
+      for(let j = 0; j < otherSet.index; j++){
+        if(this.storage[i] === otherSet.storage[j]){
           subset = true
         }
       }
@@ -108,5 +98,9 @@ export default class Set {
     return newArray
   }
 
-
+  forEach(element){
+    for(let i = 0; i < this.index; i++){
+      this.storage[i] = element(this.storage[i])
+    }
+  }
 }
