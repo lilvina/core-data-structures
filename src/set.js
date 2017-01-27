@@ -76,13 +76,7 @@ export default class Set {
 
   isSubset(otherSet){
     for(let i = 0; i < this.index; i++){
-      let subset = false
-      for(let j = 0; j < otherSet.index; j++){
-        if(this.storage[i] === otherSet.storage[j]){
-          subset = true
-        }
-      }
-      if(subset === false){
+      if(!otherSet.contains(this.storage[i])){
         return false
       }
     }
