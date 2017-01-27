@@ -83,7 +83,7 @@ describe('Queue', () => {
       expect(() => myQueue.back().to.equal(null))
     })
 
-    it('doesn\t change the length of the queue.', () => {
+    it('doesn\'t change the length of the queue.', () => {
       const myQueue = new Queue()
       myQueue.enqueue('foo')
 
