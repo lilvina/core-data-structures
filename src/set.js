@@ -42,33 +42,32 @@ export default class Set {
   }
 
   union(otherSet){
-    let newSet = this.storage
-    let newIndex = this.index
+    let newSet = new Set()
+    newSet.storage = this.storage
+    newSet.index = this.index
     for(let i = 0; i < otherSet.index; i++){
       if(!this.contains(otherSet.storage[i])){
-        newSet[newIndex++] = (otherSet.storage[i])
+        newSet.add(otherSet.storage[i])
       }
     }
     return newSet
   }
 
   intersect(otherSet){
-    let newSet = []
-    let newIndex = 0
+    let newSet = new Set()
     for(let i = 0; i < otherSet.index; i++){
       if(this.contains(otherSet.storage[i])){
-        newSet[newIndex++] = otherSet.storage[i]
+        newSet.add(otherSet.storage[i])
       }
     }
     return newSet
   }
 
   difference(otherSet){
-    let newSet = []
-    let newIndex = 0
+    let newSet = new Set()
     for(let i = 0; i < this.index; i++){
       if(!otherSet.contains(this.storage[i])){
-        newSet[newIndex++] = this.storage[i]
+        newSet.add(this.storage[i])
       }
     }
     return newSet
@@ -92,9 +91,9 @@ export default class Set {
     return newArray
   }
 
-  forEach(element){
+  forEach(callback){
     for(let i = 0; i < this.index; i++){
-      this.storage[i] = element(this.storage[i])
+      this.storage[i] = callback(this.storage[i])
     }
   }
 }
