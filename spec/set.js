@@ -4,7 +4,7 @@ import Set from '../src/set'
 
 chai.use(chaiChange)
 
-describe.only('Set', () => {
+describe('Set', () => {
   'use strict'
 
   it('exists', () => {
@@ -18,7 +18,6 @@ describe.only('Set', () => {
       expect(mySet.contains('A')).to.equal(true)
     })
   })
-
 
   context('contains()', () => {
     it('Adds A, and returns true if contains A', () => {
@@ -93,17 +92,26 @@ describe.only('Set', () => {
   context('union()', () => {
     it('Adds \'A\',\'B\',\'C\' then returns true if union [\'D\',\'E\',\'F\'] returns a set with size of 6', () => {
       const mySet = new Set()
+      const otherSet = new Set()
       mySet.add('A')
       mySet.add('B')
       mySet.add('C')
-      expect(mySet.union(['D','E','F']).length).to.equal(6)
+      otherSet.add('D')
+      otherSet.add('E')
+      otherSet.add('F')
+      expect(mySet.union(otherSet).length).to.equal(6)
     })
     it('Adds \'A\',\'B\',\'C\' then returns true if union [\'C\',\'D\',\'E\',\'F\'] returns the set [\'A\',\'B\',\'C\',\'D\',\'E\',\'F\']', () => {
       const mySet = new Set()
+      const otherSet = new Set()
       mySet.add('A')
       mySet.add('B')
       mySet.add('C')
-      expect(mySet.union(['C','D','E','F'])).to.deep.equal(['A','B','C','D','E','F'])
+      otherSet.add('C')
+      otherSet.add('D')
+      otherSet.add('E')
+      otherSet.add('F')
+      expect(mySet.union(otherSet)).to.deep.equal(['A','B','C','D','E','F'])
     })
   })
 
@@ -113,14 +121,22 @@ describe.only('Set', () => {
       mySet.add('A')
       mySet.add('B')
       mySet.add('C')
-      expect(mySet.intersect(['B','C','D']).length).to.equal(2)
+      const otherSet = new Set()
+      otherSet.add('B')
+      otherSet.add('C')
+      otherSet.add('D')
+      expect(mySet.intersect(otherSet).length).to.equal(2)
     })
     it('Adds A,B,C, then intersect [B,C,D] and returns true if returned set contains B and C', () => {
       const mySet = new Set()
       mySet.add('A')
       mySet.add('B')
       mySet.add('C')
-      expect(mySet.intersect(['B','C','D'])).to.deep.equal(['B','C'])
+      const otherSet = new Set()
+      otherSet.add('B')
+      otherSet.add('C')
+      otherSet.add('D')
+      expect(mySet.intersect(otherSet)).to.deep.equal(['B','C'])
     })
   })
 
@@ -130,14 +146,22 @@ describe.only('Set', () => {
       mySet.add('A')
       mySet.add('B')
       mySet.add('C')
-      expect(mySet.difference(['B','C','D']).length).to.equal(1)
+      const otherSet = new Set()
+      otherSet.add('B')
+      otherSet.add('C')
+      otherSet.add('D')
+      expect(mySet.difference(otherSet).length).to.equal(1)
     })
     it('Adds A,B,C, then difference [B,C,D] and returns true if returned set contains A', () => {
       const mySet = new Set()
       mySet.add('A')
       mySet.add('B')
       mySet.add('C')
-      mySet.difference(['B','C','D'])
+      const otherSet = new Set()
+      otherSet.add('B')
+      otherSet.add('C')
+      otherSet.add('D')
+      mySet.difference(otherSet)
       expect(mySet.contains('A')).to.equal(true)
     })
   })
@@ -147,14 +171,22 @@ describe.only('Set', () => {
       const mySet = new Set()
       mySet.add('B')
       mySet.add('C')
-      expect(mySet.isSubset(['A','B','C','D'])).to.equal(true)
+      const otherSet = new Set()
+      otherSet.add('A')
+      otherSet.add('B')
+      otherSet.add('C')
+      otherSet.add('D')
+      expect(mySet.isSubset(otherSet)).to.equal(true)
     })
     it('Adds B,C, then returns false if its not a subset of C D E', () => {
       const mySet = new Set()
       mySet.add('B')
       mySet.add('C')
-      expect(mySet.isSubset(['C','D','E'])).to.equal(false)
-
+      const otherSet = new Set()
+      otherSet.add('C')
+      otherSet.add('D')
+      otherSet.add('E')
+      expect(mySet.isSubset(otherSet)).to.equal(false)
     })
   })
 
@@ -173,4 +205,22 @@ describe.only('Set', () => {
     })
   })
 
+  context('forEach()', () => {
+    it('1,2,3 > add one > 2,3,4', () => {
+      const mySet = new Set()
+      mySet.add(1)
+      mySet.add(2)
+      mySet.add(3)
+      mySet.forEach((element) => ++element)
+      expect(mySet.storage).to.deep.equal([2,3,4])
+    })
+    it('A,B,C > lowerCase > a,b,c', () => {
+      const mySet = new Set()
+      mySet.add('A')
+      mySet.add('B')
+      mySet.add('C')
+      mySet.forEach((element) => element.toLowerCase())
+      expect(mySet.storage).to.deep.equal(['a','b','c'])
+    })
+  })
 })
